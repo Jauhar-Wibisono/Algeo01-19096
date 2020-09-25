@@ -23,7 +23,7 @@ public class menu{
 				// SPL
 				System.out.printf("1. Metode eliminasi Gauss\n2. Metode Eliminasi Gauss-Jordan\n3. Metode matriks balikan\n4. Kaidah Cramer\n");
 				choice=in.nextInt();
-				while (choice<1 && choice>6){
+				while (choice<1 && choice>4){
 					System.out.printf("masukan tidak valid, ulangi masukan\n");
 					choice=in.nextInt();
 				}
@@ -44,7 +44,7 @@ public class menu{
 				// Determinan
 				System.out.printf("1. Metode reduksi baris\n2. Metode ekspansi kofaktor\n");
 				choice=in.nextInt();
-				while (choice<1 && choice>6){
+				while (choice<1 && choice>2){
 					System.out.printf("masukan tidak valid, ulangi masukan\n");
 					choice=in.nextInt();
 				}

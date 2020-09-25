@@ -76,7 +76,7 @@ public class interpolasi{
 		double x[]=new double[101], y[]=new double[101];
 		double qx=0;
 		// baca masukan
-		System.out.printf("1. masukan dari keyboard\n2. masukan dari file\n");
+		System.out.printf("1. masukan titik dari keyboard\n2. masukan titik dari file\n");
 		int choice;
 		choice=in.nextInt();
 		while(choice<1 || choice>2){
@@ -89,7 +89,6 @@ public class interpolasi{
 				x[i]=in.nextDouble();
 				y[i]=in.nextDouble(); 
 			}
-			qx=in.nextDouble();
 		}
 		else{ // choice == 2
 			// diasumsikan file input berada di folder test dan namanya tidak mengandung spasi
@@ -101,13 +100,9 @@ public class interpolasi{
 				Scanner file=new Scanner(new File("../test/"+s)); 
 				n=0;
 				while (file.hasNextDouble()){
-					double tmp=file.nextDouble();
-					if (file.hasNextDouble()){
-						x[n]=tmp;
-						y[n]=file.nextDouble();
-						n++;
-					}
-					else qx=tmp;
+					x[n]=file.nextDouble();
+					y[n]=file.nextDouble();
+					n++;
 				}
 			}
 			catch (FileNotFoundException err){
@@ -115,6 +110,9 @@ public class interpolasi{
 				err.printStackTrace();
 			}
 		}
+		// input nilai x yang akan ditaksir nilai fungsinya
+		System.out.printf("masukkan nilai x yang akan ditaksir nilai fungsinya: ");
+		qx=in.nextDouble();
 		// dapatkan polinom interpolasi
 		double koef[]=interpolate(n,x,y);
 		// hitung nilai taksiran fungsi di x=qx
