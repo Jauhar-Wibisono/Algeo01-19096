@@ -13,8 +13,8 @@ import java.io.FileNotFoundException;
 public class interpolasi{
 	// atribut
 	// method
-	interpolasi(){}
-	static float[] tmp_GaussJordan(int n, float a[][]){
+	interpolasi(){} // konstruktor
+	static double[] tmp_GaussJordan(int n, double a[][]){
 		// buat matriks eselon baris
 		for (int i=0;i<n;i++){
 			if (Math.abs(a[i][i])<1e-7){
@@ -26,7 +26,7 @@ public class interpolasi{
 						found=true;
 						// tukar baris
 						for (int k=i;k<=n;k++){
-							float tmp=a[i][k];
+							double tmp=a[i][k];
 							a[i][k]=a[j][k];
 							a[j][k]=tmp;
 						}
@@ -35,31 +35,32 @@ public class interpolasi{
 			}
 			if (Math.abs(a[i][i])>1e-7){
 				// eliminasi kolom i
-				float tmp1=1/a[i][i];
+				double tmp1=1/a[i][i];
 				for (int j=i;j<=n;j++) a[i][j]*=tmp1;
 				for (int j=i+1;j<n;j++){
-					float tmp2=a[j][i]/a[i][i];
+					double tmp2=a[j][i]/a[i][i];
 					for (int k=i;k<=n;k++) a[j][k]-=tmp2*a[i][k];
 				}
 			}
 		}
 		// buat matriks eselon baris tereduksi
 		for (int i=n-1;i>=0;i--){
+			// eliminasi kolom i
 			for (int j=i-1;j>=0;j--){
-				float tmp=a[j][i]/a[i][i];
+				double tmp=a[j][i]/a[i][i];
 				for (int k=i;k<=n;k++) a[j][k]-=tmp*a[i][k];
 			}
 		}
 		// buat array solusi
-		float ret[]=new float[101];
+		double ret[]=new double[101];
 		for (int i=0;i<n;i++) ret[i]=a[i][n];
 		return ret;
 	}
-	public static float interpolate(int n, float x[], float y[], float qx){
+	public static double[] interpolate(int n, double x[], double y[]){
 		// buat matriks SPL
-		float a[][]=new float[101][101];
+		double a[][]=new double[101][101];
 		for (int i=0;i<n;i++){
-			float tmp=1;
+			double tmp=1;
 			for (int j=0;j<n;j++){
 				a[i][j]=tmp;
 				tmp*=x[i];
@@ -67,84 +68,97 @@ public class interpolasi{
 			a[i][n]=y[i];
 		}
 		// selesaikan SPL dengan Gauss-Jordan
-		float koef[]=tmp_GaussJordan(n,a);
-		// hitung f(qx), f fungsi polinom hasil interpolasi
-		float ret=0;
-		float tmp=1;
-		for (int i=0;i<n;i++){
-			ret+=koef[i]*tmp;
-			tmp*=qx;
-		}
-		return ret;
+		return tmp_GaussJordan(n,a);
 	}
 	public static void driver_interpolasi(){
-		Scanner in=(new Scanner(System.in));
+		Scanner in=new Scanner(System.in);
 		int n=0;
-		float x[]=(new float[101]), y[]=(new float[101]);
-		float qx=0, ans;
-		System.out.println("1. masukan dari keyboard");
-		System.out.println("2. masukan dari file");
+		double x[]=new double[101], y[]=new double[101];
+		double qx=0;
+		// baca masukan
+		System.out.printf("1. masukan dari keyboard\n2. masukan dari file\n");
 		int choice;
 		choice=in.nextInt();
 		while(choice<1 || choice>2){
-			System.out.println("masukan tidak valid, masukan diulang");
+			System.out.printf("masukan tidak valid, masukan diulang\n");
 			choice=in.nextInt();
 		}
 		if (choice==1){
 			n=in.nextInt();
 			for (int i=0;i<n;i++){
-				x[i]=in.nextFloat();
-				y[i]=in.nextFloat(); 
+				x[i]=in.nextDouble();
+				y[i]=in.nextDouble(); 
 			}
-			qx=in.nextFloat();
+			qx=in.nextDouble();
 		}
 		else{ // choice == 2
 			// diasumsikan file input berada di folder test dan namanya tidak mengandung spasi
 			// diasumsikan nilai x yang akan ditaksir ada di baris terakhir file input
 			String s;
-			System.out.print("masukkan nama file: ");
+			System.out.printf("masukkan nama file (nama file tidak boleh mengandung spasi): ");
 			s=in.next();
 			try{
-				Scanner file=(new Scanner(new File("../test/"+s))); 
+				Scanner file=new Scanner(new File("../test/"+s)); 
 				n=0;
-				while (file.hasNextFloat()){
-					float tmp=file.nextFloat();
-					if (file.hasNextFloat()){
+				while (file.hasNextDouble()){
+					double tmp=file.nextDouble();
+					if (file.hasNextDouble()){
 						x[n]=tmp;
-						y[n]=file.nextFloat();
+						y[n]=file.nextDouble();
 						n++;
 					}
 					else qx=tmp;
 				}
 			}
 			catch (FileNotFoundException err){
-				System.out.println("terjadi error");
+				System.out.printf("terjadi error\n");
 				err.printStackTrace();
 			}
 		}
-		ans=interpolate(n,x,y,qx);
-		System.out.println(ans);
-		System.out.println("Apakah Anda ingin menyimpan jawaban dalam file?");
-		System.out.println("1. ya");
-		System.out.println("2. tidak");
+		// dapatkan polinom interpolasi
+		double koef[]=interpolate(n,x,y);
+		// hitung nilai taksiran fungsi di x=qx
+		double ans=0;
+		double tmp=1;
+		for (int i=0;i<n;i++){
+			ans+=tmp*koef[i];
+			tmp*=qx;
+		}
+		System.out.printf("polinom interpolasi:\n");
+		for (int i=n;i>=0;i--){
+			if (i<n){
+				if (koef[i]>0) System.out.printf("+");
+			}
+			System.out.printf("%fx^%d\n",koef[i],i);
+		}
+		System.out.printf("taksiran fungsi pada x=%f: %f\n",qx,ans);
+		// beri pilihan simpan jawaban
+		System.out.printf("Apakah Anda ingin menyimpan jawaban dalam file?\n1. ya\n2. tidak\n");
 		choice=in.nextInt();
 		while(choice<1 || choice>2){
-			System.out.println("masukan tidak valid, masukan diulang");
+			System.out.printf("masukan tidak valid, masukan diulang\n");
 			choice=in.nextInt();
 		}
 		if (choice==1){
 			String s;
-			System.out.print("masukkan nama file: ");
+			System.out.printf("masukkan nama file: ");
 			s=in.next();
 			try{
 				File file=(new File("../test"+s));
 				file.createNewFile();
-				FileWriter filewriter=(new FileWriter("../test"+s));
-				filewriter.write(Float.toString(ans));
+				FileWriter filewriter=new FileWriter("../test/"+s);
+				filewriter.write("polinom interpolasi:\n");
+				for (int i=n;i>=0;i--){
+					if (i<n){
+						if (koef[i]>0) filewriter.write("+");
+					}
+					filewriter.write(Double.toString(koef[i])+"x^"+Integer.toString(i)+"\n");
+				}
+				filewriter.write("taksiran fungsi pada x="+Double.toString(qx)+": "+Double.toString(ans)+"\n");
 				filewriter.close();
 			}
 			catch (IOException err){
-				System.out.println("terjadi error");
+				System.out.printf("terjadi error\n");
 				err.printStackTrace();
 			}
 		}
