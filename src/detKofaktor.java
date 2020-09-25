@@ -8,7 +8,6 @@ public class detKofaktor {
     public static void driverdetKofaktor() {
         InputMatrix inputMtrx = new InputMatrix();
         Scanner in = new Scanner(System.in);
-        InputMatrix.M = new double[101][101];
         int Nrow;
 
         //input

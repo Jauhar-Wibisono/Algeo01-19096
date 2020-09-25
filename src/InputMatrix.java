@@ -9,7 +9,7 @@ public class InputMatrix {
     // Jadi assign variabel ini ke variabel lokal aja
     // Buat akses variabel ini di class lain pake "InputMatrix.M"
     public static int nBrs,nKol;
-    public static double[][] M;
+    public static double[][] M = new double[101][101];
     public void input(){
         Scanner in = new Scanner(System.in);
 

@@ -7,7 +7,6 @@ public class DetReduksi{
     public void driverDetReduksi() {
         InputMatrix inputMtrx = new InputMatrix();
         Scanner in = new Scanner(System.in);
-        InputMatrix.M = new double[101][101];
         double det=1;
         int Nrow,Ncol;
 
