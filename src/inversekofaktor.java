@@ -11,15 +11,16 @@ public static void driverinverskofaktor() {
     InputMatrix inputMtrx = new InputMatrix();
     Scanner in = new Scanner(System.in);
     InputMatrix.M = new double[101][101];
-    int Nrow;
+    int Nrow, Nkol;
 
     //input
     inputMtrx.input();
     Nrow = InputMatrix.nBrs;
+    Nkol = InputMatrix.nKol;
     //Perhitungan invers
     double hasil[][] = inverskofaktor(InputMatrix.M, Nrow);
 	String inversFormat = "";
-    if (hasil[0][0]== -99999999) inversFormat = "Matriks tidak memiliki invers.";
+    if ((hasil[0][0]== -99999999) || (Nkol != Nrow)) inversFormat = "Matriks tidak memiliki invers.";
     else {
     	for (int i=0;i<Nrow;i++) {
     		for (int j=0; j<Nrow; j++) {
