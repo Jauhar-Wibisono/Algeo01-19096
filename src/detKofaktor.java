@@ -8,16 +8,22 @@ public class detKofaktor {
     public static void driverdetKofaktor() {
         InputMatrix inputMtrx = new InputMatrix();
         Scanner in = new Scanner(System.in);
-        int Nrow;
+        int Nrow, Nkol;
 
         //input
         inputMtrx.input();
         Nrow = InputMatrix.nBrs;
-        //Perhitungan determinan
-        double hasil = determinan(InputMatrix.M, Nrow);
-        if (Math.abs(hasil)==0) hasil = Math.abs(hasil);
-        String detFormat = String.format("%.3f",hasil);
-        
+        Nkol = InputMatrix.nKol;
+        String detFormat;
+        if (Nrow != Nkol) {
+        	detFormat = "Bukan matriks persegi, tidak mempunyai determinan.";
+        }
+        else {
+            //Perhitungan determinan
+            double hasil = determinan(InputMatrix.M, Nrow);
+            if (Math.abs(hasil)==0) hasil = Math.abs(hasil);
+            detFormat = String.format("%.3f",hasil);
+        }
         //Output Hasil Determinan
         int opt;
         System.out.println("Apakah anda ingin masukan output kedalam file ?");
@@ -43,7 +49,6 @@ public class detKofaktor {
                 err.printStackTrace();
             }
         }
-        
         System.out.println("Determinan = "+detFormat);
         in.close();   
 }
@@ -73,6 +78,7 @@ public static double determinan(double[][] matriks, int N) {
 			}
 			det += (Math.pow(-1, (i+j)))*(matriks[i][j])*determinan(temp, N-1);	
 		}
+		if (det == -0) det = 0;
 		return det;
 	}
 }
