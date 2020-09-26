@@ -61,12 +61,13 @@ public class menu{
 			}
 			else if (choice==4){
 				// Interpolasi polinom
-				interpolasi tmp=(new interpolasi());
+				interpolasi tmp=new interpolasi();
 				tmp.driver_interpolasi();
 			}
 			else if (choice==5){
 				// Regresi linier berganda
-
+				regresi tmp=new regresi();
+				tmp.driver_regresi();
 			}
 			else{
 				keluar=true;

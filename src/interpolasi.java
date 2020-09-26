@@ -5,10 +5,7 @@
  */
 
 import java.util.Scanner;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.FileNotFoundException;
+import java.io.*;
 
 public class interpolasi{
 	// atribut
@@ -67,11 +64,12 @@ public class interpolasi{
 			}
 			a[i][n]=y[i];
 		}
-		// selesaikan SPL dengan Gauss-Jordan
+		// selesaikan SPL dengan eliminasi Gauss-Jordan
 		return tmp_GaussJordan(n,a);
 	}
 	public static void driver_interpolasi(){
 		Scanner in=new Scanner(System.in);
+		BufferedReader in2=new BufferedReader(new InputStreamReader(System.in));
 		int n=0;
 		double x[]=new double[101], y[]=new double[101];
 		double qx=0;
@@ -80,7 +78,7 @@ public class interpolasi{
 		int choice;
 		choice=in.nextInt();
 		while(choice<1 || choice>2){
-			System.out.printf("masukan tidak valid, masukan diulang\n");
+			System.out.printf("masukan tidak valid, ulangi masukan\n");
 			choice=in.nextInt();
 		}
 		if (choice==1){
@@ -91,11 +89,15 @@ public class interpolasi{
 			}
 		}
 		else{ // choice == 2
-			// diasumsikan file input berada di folder test dan namanya tidak mengandung spasi
-			// diasumsikan nilai x yang akan ditaksir ada di baris terakhir file input
-			String s;
-			System.out.printf("masukkan nama file (nama file tidak boleh mengandung spasi): ");
-			s=in.next();
+			// diasumsikan file input berada di folder test
+			String s="";
+			System.out.printf("masukkan nama file: ");
+			try{
+				s=in2.readLine();
+			}
+			catch (IOException err){
+				err.printStackTrace();
+			}
 			try{
 				Scanner file=new Scanner(new File("../test/"+s)); 
 				n=0;
@@ -106,7 +108,6 @@ public class interpolasi{
 				}
 			}
 			catch (FileNotFoundException err){
-				System.out.printf("terjadi error\n");
 				err.printStackTrace();
 			}
 		}
@@ -122,6 +123,7 @@ public class interpolasi{
 			ans+=tmp*koef[i];
 			tmp*=qx;
 		}
+		// cetak jawaban
 		System.out.printf("polinom interpolasi:\n");
 		for (int i=n;i>=0;i--){
 			if (i<n){
@@ -134,7 +136,7 @@ public class interpolasi{
 		System.out.printf("Apakah Anda ingin menyimpan jawaban dalam file?\n1. ya\n2. tidak\n");
 		choice=in.nextInt();
 		while(choice<1 || choice>2){
-			System.out.printf("masukan tidak valid, masukan diulang\n");
+			System.out.printf("masukan tidak valid, ulangi masukan\n");
 			choice=in.nextInt();
 		}
 		if (choice==1){
@@ -156,7 +158,6 @@ public class interpolasi{
 				filewriter.close();
 			}
 			catch (IOException err){
-				System.out.printf("terjadi error\n");
 				err.printStackTrace();
 			}
 		}
