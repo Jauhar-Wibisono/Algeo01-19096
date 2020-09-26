@@ -6,16 +6,15 @@ public class GaussJordan {
         boolean swap;
 
         // Proses OBE
-        if (nKol > nBrs) y = LastIdxKol-nBrs;
-        else y = LastIdxKol;
+        if (nKol>nBrs) y = nBrs;
+        else y = nKol;
 
-        for (int l = FirstIdx; l<=y; l++) {
-            int x;
+        for (int l = FirstIdx; l<y; l++) {
+            int x=l;
             swap = false;
 
             // Cek diagonal 0
-            if (M[l][l] == 0) {
-                x = l;
+            if (M[l][x] == 0) {
                 while (!swap && x<=LastIdxBar) {// cari baris yang bisa diswap
                     if (M[x][l] != 0) {
                         swap = true;
@@ -28,27 +27,34 @@ public class GaussJordan {
                     M[l][k]=M[x][k];
                     M[x][k]= temp;
                 }
-            }
 
-            //Membuat elemen diagonal menjadi 1 dan perkalian barisnya
-            kons = 1/M[l][l];
-            for(int j=FirstIdx; j<=LastIdxKol; j++){
-                M[l][j] *= kons;
-                if (Math.abs(M[l][j])==0) M[l][j] = Math.abs(M[l][j]);
-            }
-            
-
-            int i=(l+1)%nBrs; 
-            while(i!=l&&M[l][l]!=0){
-                //Cari konstanta pembuat 0
-                kons = (M[i][l])/(M[l][l]);
-                M[i][l]=0;
-                
-                for(int j=l+1; j<=LastIdxKol; j++){
-                    M[i][j] -= kons*(M[l][j]);
-                    if (Math.abs(M[i][j])==0) M[i][j] = Math.abs(M[i][j]);
+                //Cek kolom jika tidak ada baris yang dapat diswap
+                for(int i=0;i<nKol-1&&!swap&&l+i<nKol;i++){
+                    if (M[l][l+i]!=0) {x=l+i; swap=true;};
                 }
-                i= (i+1) % nBrs;
+            }
+
+            if (M[l][x]!=0){
+                //Membuat elemen diagonal menjadi 1 dan perkalian barisnya
+                kons = 1/M[l][x];
+                for(int j=FirstIdx; j<=LastIdxKol; j++){
+                    M[l][j] *= kons;
+                    if (Math.abs(M[l][j])==0) M[l][j] = Math.abs(M[l][j]);
+                }
+                
+
+                int i=(l+1)%nBrs; 
+                while(i!=l){
+                    //Cari konstanta pembuat 0
+                    kons = (M[i][x])/(M[l][x]);
+                    M[i][x]=0;
+                    
+                    for(int j=x+1; j<=LastIdxKol; j++){
+                        M[i][j] -= kons*(M[l][j]);
+                        if (Math.abs(M[i][j])==0) M[i][j] = Math.abs(M[i][j]);
+                    }
+                    i= (i+1) % nBrs;
+                }
             }
         }
         return M;

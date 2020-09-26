@@ -7,13 +7,13 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 public class SPL {
-    public static int nBrs,nKol;
-    public static double[][] A = new double[101][100];
-    public static double[][] B = new double[101][1];
+    public static int nBrs,nKol; 
     public static double[][] Maug = new double[101][101];
     public static String[] variable = new String[101];
     
     public void input(){
+        double[][] A = new double[101][100];
+        double[][] B = new double[101][1];
         Scanner in = new Scanner(System.in);
         int opt;
         System.out.println("1. Masukkan Matriks dari keyboard");
@@ -150,6 +150,7 @@ public class SPL {
             else solusiUnik=true;
 
             if (solusiUnik){//Solusi SPL unik
+                //Subtitusi mundur
                 for(int i=Nbar-1;i>=0;i--){
                     double temp = M[i][Ncol-1];
                     for(int j=i+1;j<Ncol-1;j++){
@@ -159,40 +160,92 @@ public class SPL {
                     solusi[i] = String.format("%.2f",temp);
                 }
             }else{//Solusi SPL lebih dari 1
-                char param = 't';
                 int Nvar = Ncol-(1+Nbar);
-                double[][] koefparam = new double[Ncol][Nvar+1];
-                for(int i=0;i<Ncol;i++){
+
+                //Deklarasi matriks koefparam[i][j]
+                //i=idx variabel X, j=koef. variabel parametrik
+                double[][] koefparam = new double[Ncol+1][Nvar+1];
+                for(int i=0;i<=Ncol;i++){
                     for(int j=0;j<=Nvar;j++){
-                        koefparam[i][j]=0;
+                        if (i==Ncol) koefparam[i][j]=Ncol-1;
+                        else koefparam[i][j]=0;
                     }
                 }
 
-                //Permisalan variabel
-                for(int j=Ncol-2;j>=Nbar;j--){
-                    solusi[j] = Character.toString(param);
-                    param--;
-                    koefparam[j][j-Nvar]=1;    
+                //Pemisalan variabel
+                int count=0;//count jumlah variabel yang dijadikan param (<=Nvar)
+                int x=0;//idx kolom jika ada pergeseran diagonal
+
+                //Periksa diagonal awal
+                char param = 'p';
+                for(int i=0;i<Nbar;i++){
+                    if (M[i][x]==0){
+                        solusi[x]=Character.toString(param);
+                        boolean nol = true;
+                        count++;
+                        koefparam[x][count]=1;
+                        koefparam[Ncol][count]=x;
+                        param++; x++;
+                        //Periksa kolom sebelahnya 0 atau tidak
+                        for(int l=x;l<Ncol-1&&nol;l++){
+                            if (M[i][l]==0){//Jika 0 juga di misalkan
+                                solusi[l]=Character.toString(param);
+                                count++;
+                                koefparam[l][count]=1;
+                                koefparam[Ncol][count]=l;
+                                param++; x++;
+                            }else nol = false;
+                        }
+                    }
+                    x++;
+                }
+                //Periksa variabel yang tidak termasuk diagonal awal
+                int k = Nbar-1;
+                for(int j=Ncol-(1+Nvar);j<Ncol-1&&count!=Nvar;j++){
+                    if (M[k][j]!=0&&!checkBar(M, k, j)){
+                        solusi[j]=Character.toString(param);
+                        count++;
+                        koefparam[j][count]=1;
+                        koefparam[Ncol][count]=j;
+                        param++;                                        
+                    }else if(M[k][j]==0&&checkCol(M, j, Nbar)){
+                        solusi[j]=Character.toString(param);
+                        count++;
+                        koefparam[j][count]=1;
+                        koefparam[Ncol][count]=j;
+                        param++; 
+                    }
                 }
 
                 //Perhitungan solusi
                 for(int i=Nbar-1;i>=0;i--){
-                    String temp="";
-                    koefparam[i][0] = M[i][Ncol-1];
-                    //Subtitusi mundur
-                    for(int j=i+1;j<Ncol-1;j++){
-                        //Penyimpanan koefisen variabel yang dimisalkan
-                        for(int l=0;l<=Nvar;l++){
-                            koefparam[i][l] -= M[i][j]*koefparam[j][l];
-                        } 
+                    //Cari diagonal 1
+                    boolean found=false;
+                    int y=0;
+                    for(int j=0;j<Ncol-1&&!found;j++){
+                        //Cari kolom pertama yang elemennya bukan 0
+                        if (M[i][j]!=0){
+                            found = true;
+                            y = j;
+                        }
                     }
+                    koefparam[y][0] = M[i][Ncol-1];
+                    //Penyimpanan koefisen variabel yang dimisalkan
+                    for (int m=y+1;m<Ncol-1;m++){
+                        for (int l=0;l<=Nvar;l++){
+                            koefparam[y][l] -= M[i][m]*koefparam[m][l];
+                        }
+                    }
+
                     //Buat persamaan parametrik
+                    String temp="";
                     boolean zero=false;
-                    for(int l=0;l<=Nvar;l++){
-                        double value=koefparam[i][l];
+                    for(int l=0;l<=Nvar&&found;l++){
+                        double value=koefparam[y][l];
                         String op;
+                        int varIdx = (int) koefparam[Ncol][l];
                         //Cek mines
-                        if (value<0) {op="-"; value = Math.abs(value);}
+                        if (value<0&&l!=0) {op="-"; value = Math.abs(value);}
                         else op="+";
 
                         if(value==0) {//Koefisien 0
@@ -200,16 +253,17 @@ public class SPL {
                         }
                         else if(value==1){//Koefisien 1
                             if (l==0) temp = temp + String.format("%.2f",value);
-                            else if(zero) {temp = temp + solusi[l+Nvar]; zero=false;}
-                            else temp = temp + op + solusi[l+Nvar];
+                            else if(zero) {temp = temp + solusi[varIdx]; zero=false;}
+                            else temp = temp + op + solusi[varIdx];
                         }
                         else{//Koefisien > 1
                             if (l==0) temp = temp + String.format("%.2f",value);
-                            else if(zero) {temp = temp + String.format("%.2f",value)+solusi[l+Nvar]; zero=false;}
-                            else temp = temp + op + String.format("%.2f",value)+solusi[l+Nvar];
+                            else if(zero) {temp = temp + String.format("%.2f",value)+solusi[varIdx]; zero=false;}
+                            else temp = temp + op + String.format("%.2f",value)+solusi[varIdx];
                         }
-                    } 
-                    solusi[i]=temp;
+                    }
+                    if (found) solusi[y]=temp;
+                
                 }
             }
         }
@@ -247,38 +301,101 @@ public class SPL {
                     solusi[i]=String.format("%.2f",M[i][Ncol-1]);
                 }
             }else{//Solusi lebih dari 1
-                char param = 't';
-                int Nvar = Ncol-(1+Nbar);
-                double[][] koefparam = new double[Ncol][Nvar+1];
-                for(int i=0;i<Ncol;i++){
+                int Nvar = Ncol-(1+Nbar);//Jumlah variabel parametrik
+
+                //Deklarasi matriks koefparam[i][j]
+                //i=idx variabel X, j=koef. variabel parametrik
+                double[][] koefparam = new double[Ncol+1][Nvar+1];
+                for(int i=0;i<=Ncol;i++){
                     for(int j=0;j<=Nvar;j++){
-                        koefparam[i][j]=0;
+                        if (i==Ncol) koefparam[i][j]=Ncol-1;
+                        else koefparam[i][j]=0;
                     }
                 }
+
                 //Pemisalan variabel
-                for(int j=Ncol-2;j>=Nbar;j--){
-                    solusi[j]=Character.toString(param);
-                    koefparam[j][j-Nvar]=1;
-                    param--;
+                int count=0;//count jumlah variabel yang dijadikan param (<=Nvar)
+                int x=0;//idx kolom jika ada pergeseran diagonal
+
+                //Periksa diagonal awal
+                char param = 'p';
+                for(int i=0;i<Nbar;i++){
+                    if (M[i][x]==0){
+                        solusi[x]=Character.toString(param);
+                        boolean nol = true;
+                        count++;
+                        koefparam[x][count]=1;
+                        koefparam[Ncol][count]=x;
+                        param++; x++;
+                        //Periksa kolom sebelahnya 0 atau tidak
+                        for(int l=x;l<Ncol-1&&nol;l++){
+                            if (M[i][l]==0){//Jika 0 juga di misalkan
+                                solusi[l]=Character.toString(param);
+                                count++;
+                                koefparam[l][count]=1;
+                                koefparam[Ncol][count]=l;
+                                param++; x++;
+                            }else nol = false;
+                        }
+                    }
+                    x++;
+                }
+                //Periksa variabel yang tidak termasuk diagonal awal
+                int k = Nbar-1;
+                for(int j=Ncol-(1+Nvar);j<Ncol-1&&count!=Nvar;j++){
+                    if (M[k][j]!=0&&!checkBar(M, k, j)){
+                        solusi[j]=Character.toString(param);
+                        count++;
+                        koefparam[j][count]=1;
+                        koefparam[Ncol][count]=j;
+                        param++;                                        
+                    }else if(M[k][j]==0&&(checkCol(M, j, Nbar))){
+                        solusi[j]=Character.toString(param);
+                        count++;
+                        koefparam[j][count]=1;
+                        koefparam[Ncol][count]=j;
+                        param++; 
+                    }
                 }
 
                 //Perhitungan solusi
                 for(int i=Nbar-1;i>=0;i--){
-                    String temp="";
-                    koefparam[i][0] = M[i][Ncol-1];
-                    //Penyimpanan koefisen variabel yang dimisalkan
-                    for(int j=Ncol-(1+Nvar);j<Ncol-1;j++){
+                    //Pencarian elemen bukan 0
+                    int y=0;
+                    boolean found=false;
+                    for(int j=0;j<Ncol-1&&!found;j++){
+                        if (M[i][j]!=0){
+                            found=true;
+                            y=j;
+                        }
+                    }
+                    koefparam[y][0] = M[i][Ncol-1];
+
+                    //Penyimpanan koefisen variabel yang dimisalkan di array koefparam
+                    for(int j=y+1;j<Ncol-1;j++){
                         for(int l=0;l<=Nvar;l++){
-                            koefparam[i][l] -= M[i][j]*koefparam[j][l];
+                            koefparam[y][l] -= M[i][j]*koefparam[j][l];
                         } 
                     }
+
+                    System.out.println("Variabel ke"+(y+1));
+                    for(int j=0;j<Ncol-1;j++){
+                        for(int l=0;l<=Nvar;l++){
+                            System.out.print(koefparam[j][l]+" ");
+                        } 
+                        System.out.println();
+                    }
+
                     //Buat persamaan parametrik
+                    String temp="";
                     boolean zero=false;
                     for(int l=0;l<=Nvar;l++){
-                        double value=koefparam[i][l];
+                        double value=koefparam[y][l];
                         String op;
+                        int idxVar = (int) koefparam[Ncol][l];
+
                         //Cek mines
-                        if (value<0) {op="-"; value = Math.abs(value);}
+                        if (value<0&&l!=0) {op="-"; value = Math.abs(value);}
                         else op="+";
 
                         if(value==0) {//Koefisien 0
@@ -286,26 +403,36 @@ public class SPL {
                         }
                         else if(value==1){//Koefisien 1
                             if (l==0) temp = temp + String.format("%.2f",value);
-                            else if(zero) {temp = temp + solusi[l+Nvar]; zero=false;}
-                            else temp = temp + op + solusi[l+Nvar];
+                            else if(zero) {temp = temp + solusi[idxVar]; zero=false;}
+                            else temp = temp + op + solusi[idxVar];
                         }
                         else{//Koefisien > 1
                             if (l==0) temp = temp + String.format("%.2f",value);
-                            else if(zero) {temp = temp + String.format("%.2f",value)+solusi[l+Nvar]; zero=false;}
-                            else temp = temp + op + String.format("%.2f",value)+solusi[l+Nvar];
+                            else if(zero) {temp = temp + String.format("%.2f",value)+solusi[idxVar]; zero=false;}
+                            else temp = temp + op + String.format("%.2f",value)+solusi[idxVar];
                         }
                     } 
-                    solusi[i]=temp;
+                    if (found) solusi[y]=temp;
                 }
             }
         }
-        output(variable,solusi,nKol,isSolve);
+        output(variable,solusi,Ncol,isSolve);
     }
 
     public boolean checkBar(double[][] M,int i,int Ncol){
         boolean nol = true;
 
         for(int j=0;j<Ncol&&nol;j++){
+            if (M[i][j] != 0) nol=false;
+        }
+
+        return nol;
+    }
+
+    public boolean checkCol(double[][] M,int j,int Nbar){
+        boolean nol = true;
+
+        for(int i=0;i<Nbar&&nol;i++){
             if (M[i][j] != 0) nol=false;
         }
 
