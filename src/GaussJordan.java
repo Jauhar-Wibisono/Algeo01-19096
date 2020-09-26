@@ -28,6 +28,8 @@ public class GaussJordan {
                     M[x][k]= temp;
                 }
 
+                if (swap) x=l;
+
                 //Cek kolom jika tidak ada baris yang dapat diswap
                 for(int i=0;i<nKol-1&&!swap&&l+i<nKol;i++){
                     if (M[l][l+i]!=0) {x=l+i; swap=true;};
