@@ -1,3 +1,5 @@
+import java.sql.NClob;
+
 public class Gauss{
     public double[][] OBEGauss(final int nBrs, final int nKol, final double[][] M, final boolean iden) {
         final int FirstIdx = 0, LastIdxBar = nBrs-1, LastIdxKol = nKol-1;
@@ -31,6 +33,8 @@ public class Gauss{
                     M[x][k]= temp;
                 }
 
+                if (swap) x = l;
+
                 //Cek kolom jika tidak ada baris yang dapat diswap
                 for(int i=0;i<nKol-1&&!swap&&l+i<nKol;i++){
                     if (M[l][l+i]!=0) {x=l+i; swap=true;};
@@ -58,7 +62,7 @@ public class Gauss{
             }
         }
         if (!iden) M[0][0] *= Math.pow(-1, p);
-        
+
         return M;
     }
 }

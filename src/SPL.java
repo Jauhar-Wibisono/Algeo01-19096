@@ -136,10 +136,12 @@ public class SPL {
         }
 
         //Cek ada solusi atau tidak
-        if (checkBar(M, Nbar-1, Ncol-1) && M[Nbar-1][Ncol-1]!=0){
-            isSolve=false;
+        for (int i=0; i<Nbar; i++){
+            if (checkBar(M, i, Ncol-1) && M[i][Ncol-1]!=0){
+                isSolve=false;
+            }
         }
-        else {//Ada solusi
+        if (isSolve) {//Ada solusi
             //Elminasi baris yang elemennya 0 semua
             for(int i=Nbar-1;i>=0;i--){
                 if(checkBar(M, i, Ncol)) Nbar--;
@@ -282,11 +284,13 @@ public class SPL {
         }
 
         boolean solusiUnik, isSolve=true;
-        //Periksa ada solusi SPL atau tidak
-        if (checkBar(M, Nbar-1, Ncol-1) && M[Nbar-1][Ncol-1]!=0){
-            isSolve=false;
+        //Periksa ada solusi atau tidak
+        for (int i=0; i<Nbar; i++){
+            if (checkBar(M, i, Ncol-1) && M[i][Ncol-1]!=0){
+                isSolve=false;
+            }
         }
-        else{
+        if(isSolve){
             //Eliminasi baris yang elemen nya 0 semua
             for(int i=Nbar-1;i>=0;i--){
                 if(checkBar(M, i, Ncol)) Nbar--;

@@ -36,18 +36,23 @@ public class InputMatrix {
             }
         }else{
             String namaFile;
-            System.out.print("Masukan nama file: ");
-            namaFile = in.next();
-            
             try{
-                Scanner  fileCount = new Scanner(new BufferedReader(new FileReader("../test/"+namaFile)));
-                while(fileCount.hasNextLine()) {
-                    nBrs++;
-                    String[] line = fileCount.nextLine().trim().split(" ");
-                    nKol = line.length;
-                }
-                fileCount.close();
-
+                do {
+                    System.out.print("Masukan nama file: ");
+                    namaFile = in.next();
+                    Scanner  fileCount = new Scanner(new BufferedReader(new FileReader("../test/"+namaFile)));
+                    while(fileCount.hasNextLine()) {
+                        nBrs++;
+                        String[] line = fileCount.nextLine().trim().split(" ");
+                        nKol = line.length;
+                    }
+                    if (nBrs!=nKol){
+                        System.out.println("Input file tidak valid, jumlah baris dan kolom tidak sama.");
+                        System.out.println("Silahkan input kembali nama file yang memiliki matriks dengan ukuran valid.");
+                    }
+                    fileCount.close();
+                }while (nBrs!=nKol);
+               
                 Scanner file = new Scanner(new File("../test/"+namaFile));
                 for (int i=0;i<nBrs;i++){
                     for (int j=0;j<nKol;j++){
