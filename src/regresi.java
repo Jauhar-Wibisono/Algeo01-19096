@@ -11,7 +11,7 @@ public class regresi{
 	// atribut
 	// method
 	regresi(){} // konstruktor
-	static double[] tmp_GaussJordan(int n, double a[][]){
+	static double[] GaussJordan(int n, double a[][]){
 		// buat matriks eselon baris
 		for (int i=0;i<n;i++){
 			if (Math.abs(a[i][i])<1e-7){
@@ -74,7 +74,7 @@ public class regresi{
 			}
 		}
 		// selesaikan SPL dengan eliminasi Gauss-Jordan
-		return tmp_GaussJordan(n+1,a);
+		return GaussJordan(n+1,a);
 	}
 	public static void driver_regresi(){
 		Scanner in=new Scanner(System.in);
