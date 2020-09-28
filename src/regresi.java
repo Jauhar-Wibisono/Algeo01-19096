@@ -4,8 +4,6 @@
  * regresi.java
  */
 
-// pending, gak paham sama format masukannya
-
 import java.util.Scanner;
 import java.io.*;
 

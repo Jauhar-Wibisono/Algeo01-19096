@@ -80,6 +80,6 @@ public class InversOBE {
             }
             System.out.println();
         }
-        in.close();
+//      in.close();
     }
 }

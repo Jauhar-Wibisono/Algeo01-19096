@@ -50,7 +50,7 @@ public class detKofaktor {
             }
         }
         System.out.println("Determinan = "+detFormat);
-        in.close();   
+//      in.close();   
 }
 public static double determinan(double[][] matriks, int N) {
 	int i,j,k,y,l;

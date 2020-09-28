@@ -36,7 +36,7 @@ public void input(){
 
     if (opt==1){
         System.out.print("Input ukuran matriks (NxN): ");
-        int N = in.nextInt();
+        N = in.nextInt();
         
         System.out.println("Masukan matriks koefisien (A[i][j])");
         for(int i=0;i<N;i++){

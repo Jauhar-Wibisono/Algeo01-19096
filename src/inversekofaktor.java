@@ -57,7 +57,7 @@ public static void driverinverskofaktor() {
     }
     
     System.out.println(inversFormat);
-    in.close();   
+//  in.close();   
 }
 public static double[][] inverskofaktor(double[][] matriks, int N){
 	if (N == 1) {

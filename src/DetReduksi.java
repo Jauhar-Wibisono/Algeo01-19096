@@ -53,6 +53,6 @@ public class DetReduksi{
         }
         
         System.out.println("Determinan = "+detFormat);
-        in.close();
+//      in.close();
     }
 }
