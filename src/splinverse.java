@@ -15,7 +15,7 @@ public class splinverse {
 		};
 		inversSPL(M, 3);
 	}*/
-    public static int nBrs,nKol;
+    public static int nBrs,nKol, N;
     public static double[][] A = new double[101][100];
     public static double[][] B = new double[101][1];
     public static double[][] Maug = new double[101][101];
