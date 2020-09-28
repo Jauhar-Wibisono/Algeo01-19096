@@ -48,7 +48,7 @@ public class SPL {
             nKol++;
             for(int i=0;i<nBrs;i++){
                 for(int j=0;j<nKol;j++){
-                    if (j!=nKol) Maug[i][j]= A[i][j];
+                    if (j!=nKol-1) Maug[i][j]= A[i][j];
                     else Maug[i][j] = B[i][0];
                 }
             }

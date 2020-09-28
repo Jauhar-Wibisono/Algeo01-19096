@@ -22,6 +22,7 @@ public class InversOBE {
         //Pengambilan matriks invers pada IM^-1
         for(int i=0;i<N;i++){
             for(int j=0;j<N;j++){
+                if (Math.abs(Mtemp[i][j+N])==0) Mtemp[i][j+N] = 0; 
                 M[i][j] = Mtemp[i][j+N];
             }
         }
