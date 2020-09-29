@@ -18,7 +18,7 @@ public class SPL {
         int opt;
         System.out.println("1. Masukkan Matriks dari keyboard");
         System.out.println("2. Masukkan Matriks dari file");
-        System.out.print("Input pilihan :");
+        System.out.print("Input pilihan: ");
         opt = in.nextInt();
 
         while(opt<1 || opt>2){
@@ -27,9 +27,9 @@ public class SPL {
         }
 
         if (opt==1){
-            System.out.print("Input Jumlah Persamaan:");
+            System.out.print("Input Jumlah Persamaan: ");
             nBrs = in.nextInt();
-            System.out.print("Input Jumlah Variabel:");
+            System.out.print("Input Jumlah Variabel: ");
             nKol = in.nextInt();
             
             System.out.println("Masukan matriks koefisien (A[i][j])");
@@ -54,31 +54,36 @@ public class SPL {
             }
         }else{
             String namaFile;
-            System.out.print("Masukan nama file: ");
-            namaFile = in.next();
-            
-            try{
-                Scanner  fileCount = new Scanner(new BufferedReader(new FileReader("../test/"+namaFile)));
-                while(fileCount.hasNextLine()) {
-                    nBrs++;
-                    String[] line = fileCount.nextLine().trim().split(" ");
-                    nKol = line.length;
-                }
-                fileCount.close();
+            boolean error;
+            do{
+                error=false;
+                System.out.print("Masukan nama file: ");
+                namaFile = in.next();
+                
+                try{
+                    Scanner  fileCount = new Scanner(new BufferedReader(new FileReader("../test/"+namaFile)));
+                    while(fileCount.hasNextLine()) {
+                        nBrs++;
+                        String[] line = fileCount.nextLine().trim().split(" ");
+                        nKol = line.length;
+                    }
+                    fileCount.close();
 
-                Scanner file = new Scanner(new File("../test/"+namaFile));
-                for (int i=0;i<nBrs;i++){
-                    for (int j=0;j<nKol;j++){
-                        if (file.hasNextDouble()){
-                            Maug[i][j] = file.nextDouble();
+                    Scanner file = new Scanner(new File("../test/"+namaFile));
+                    for (int i=0;i<nBrs;i++){
+                        for (int j=0;j<nKol;j++){
+                            if (file.hasNextDouble()){
+                                Maug[i][j] = file.nextDouble();
+                            }
                         }
                     }
                 }
-            }
-            catch(FileNotFoundException err){
-                System.out.println("Terjadi error dalam proses pembacaan file.");
-                err.printStackTrace();
-            }
+                catch(FileNotFoundException err){
+                    error = true;
+                    System.out.println("Terjadi error dalam proses pembacaan file.\nSilahkan input ulang nama file.");
+                    err.printStackTrace();
+                }
+            } while (error);
         }
     }
 

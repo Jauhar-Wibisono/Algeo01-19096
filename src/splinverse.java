@@ -60,31 +60,35 @@ public class splinverse {
             }
         }else{
             String namaFile;
-            System.out.print("Masukan nama file: ");
-            namaFile = in.next();
-            
-            try{
-                Scanner  fileCount = new Scanner(new BufferedReader(new FileReader("../test/"+namaFile)));
-                while(fileCount.hasNextLine()) {
-                    nBrs++;
-                    String[] line = fileCount.nextLine().trim().split(" ");
-                    nKol = line.length;
-                }
-                fileCount.close();
-
-                Scanner file = new Scanner(new File("../test/"+namaFile));
-                for (int i=0;i<nBrs;i++){
-                    for (int j=0;j<nKol;j++){
-                        if (file.hasNextDouble()){
-                            Maug[i][j] = file.nextDouble();
+            boolean error;
+            do{
+                System.out.print("Masukan nama file: ");
+                namaFile = in.next();
+                error = false;
+                try{
+                    Scanner  fileCount = new Scanner(new BufferedReader(new FileReader("../test/"+namaFile)));
+                    while(fileCount.hasNextLine()) {
+                        nBrs++;
+                        String[] line = fileCount.nextLine().trim().split(" ");
+                        nKol = line.length;
+                    }
+                    fileCount.close();
+    
+                    Scanner file = new Scanner(new File("../test/"+namaFile));
+                    for (int i=0;i<nBrs;i++){
+                        for (int j=0;j<nKol;j++){
+                            if (file.hasNextDouble()){
+                                Maug[i][j] = file.nextDouble();
+                            }
                         }
                     }
                 }
-            }
-            catch(FileNotFoundException err){
-                System.out.println("Terjadi error dalam proses pembacaan file.");
-                err.printStackTrace();
-            }
+                catch(FileNotFoundException err){
+                    System.out.println("Terjadi error dalam proses pembacaan file.");
+                    err.printStackTrace();
+                    error = true;
+                }
+            }while (error);
         }
     }
     public static void output(String[] Var, String[] solusi, int Nvar, boolean isSolve){
