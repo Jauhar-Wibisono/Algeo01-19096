@@ -82,7 +82,9 @@ public class interpolasi{
 			choice=in.nextInt();
 		}
 		if (choice==1){
+			System.out.printf("masukkan jumlah titik: ");
 			n=in.nextInt();
+			System.out.printf("masukkan titik-titik (x dan y dipisah spasi):\n");
 			for (int i=0;i<n;i++){
 				x[i]=in.nextDouble();
 				y[i]=in.nextDouble(); 
@@ -90,26 +92,31 @@ public class interpolasi{
 		}
 		else{ // choice == 2
 			// diasumsikan file input berada di folder test
-			String s="";
-			System.out.printf("masukkan nama file: ");
-			try{
-				s=in2.readLine();
-			}
-			catch (IOException err){
-				err.printStackTrace();
-			}
-			try{
-				Scanner file=new Scanner(new File("../test/"+s)); 
-				n=0;
-				while (file.hasNextDouble()){
-					x[n]=file.nextDouble();
-					y[n]=file.nextDouble();
-					n++;
+			boolean error;
+			do{
+				error=false;
+				String s="";
+				System.out.printf("masukkan nama file: ");
+				try{
+					s=in2.readLine();
 				}
-			}
-			catch (FileNotFoundException err){
-				err.printStackTrace();
-			}
+				catch (IOException err){
+					err.printStackTrace();
+				}
+				try{
+					Scanner file=new Scanner(new File("../test/"+s)); 
+					n=0;
+					while (file.hasNextDouble()){
+						x[n]=file.nextDouble();
+						y[n]=file.nextDouble();
+						n++;
+					}
+				}
+				catch (FileNotFoundException err){
+					err.printStackTrace();
+					error=true;
+				}
+			} while(error);
 		}
 		// input nilai x yang akan ditaksir nilai fungsinya
 		System.out.printf("masukkan nilai x yang akan ditaksir nilai fungsinya: ");
@@ -129,7 +136,7 @@ public class interpolasi{
 			if (i<n){
 				if (koef[i]>0) System.out.printf("+");
 			}
-			System.out.printf("%fx^%d\n",koef[i],i);
+			System.out.printf("%f x^%d\n",koef[i],i);
 		}
 		System.out.printf("taksiran fungsi pada x=%f: %f\n",qx,ans);
 		// beri pilihan simpan jawaban
@@ -140,19 +147,22 @@ public class interpolasi{
 			choice=in.nextInt();
 		}
 		if (choice==1){
-			String s;
+			String s="";
 			System.out.printf("masukkan nama file: ");
-			s=in.next();
 			try{
-				File file=(new File("../test"+s));
-				file.createNewFile();
+					s=in2.readLine();
+				}
+				catch (IOException err){
+					err.printStackTrace();
+				}
+			try{
 				FileWriter filewriter=new FileWriter("../test/"+s);
 				filewriter.write("polinom interpolasi:\n");
 				for (int i=n;i>=0;i--){
 					if (i<n){
 						if (koef[i]>0) filewriter.write("+");
 					}
-					filewriter.write(Double.toString(koef[i])+"x^"+Integer.toString(i)+"\n");
+					filewriter.write(Double.toString(koef[i])+" x^"+Integer.toString(i)+"\n");
 				}
 				filewriter.write("taksiran fungsi pada x="+Double.toString(qx)+": "+Double.toString(ans)+"\n");
 				filewriter.close();

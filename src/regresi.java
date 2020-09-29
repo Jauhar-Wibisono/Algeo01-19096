@@ -91,8 +91,11 @@ public class regresi{
 			choice=in.nextInt();
 		}
 		if (choice==1){
+			System.out.printf("masukkan banyak peubah x: ");
 			n=in.nextInt();
+			System.out.printf("masukkan banyak persamaan: ");
 			m=in.nextInt();
+			System.out.printf("masukkan %d baris persamaan:\n",m);
 			for (int i=0;i<m;i++){
 				for (int j=0;j<n;j++) x[i][j]=in.nextDouble();
 				y[i]=in.nextDouble(); 
@@ -100,37 +103,43 @@ public class regresi{
 		}
 		else{ // choice == 2
 			// diasumsikan file input berada di folder test
-			String s="";
-			System.out.printf("masukkan nama file: ");
-			try{
-				s=in2.readLine();
-			}
-			catch (IOException err){
-				err.printStackTrace();
-			}
-			try{
-				BufferedReader file=new BufferedReader(new FileReader(new File("../test/"+s))); 
-				String line;
-				n=0;
-				m=0;
+			boolean error;
+			do{
+				error=false;
+				String s="";
+				System.out.printf("masukkan nama file: ");
 				try{
-					while ((line=file.readLine())!=null){
-						String parts[]=line.split(" ");
-						n=parts.length-1;
-						for (int i=0;i<n;i++) x[m][i]=Double.parseDouble(parts[i]);
-						y[m]=Double.parseDouble(parts[n]);
-						m++;
-					}
+					s=in2.readLine();
 				}
-				catch(IOException err){
+				catch (IOException err){
 					err.printStackTrace();
 				}
-			}
-			catch (FileNotFoundException err){
-				err.printStackTrace();
-			}
+				try{
+					BufferedReader file=new BufferedReader(new FileReader(new File("../test/"+s))); 
+					String line;
+					n=0;
+					m=0;
+					try{
+						while ((line=file.readLine())!=null){
+							String parts[]=line.split(" ");
+							n=parts.length-1;
+							for (int i=0;i<n;i++) x[m][i]=Double.parseDouble(parts[i]);
+							y[m]=Double.parseDouble(parts[n]);
+							m++;
+						}
+					}
+					catch(IOException err){
+						err.printStackTrace();
+					}
+				}
+				catch (FileNotFoundException err){
+					err.printStackTrace();
+					error=true;
+				}
+			} while (error);
 		}
 		// imput nilai-nilai x yang akan ditaksir nilai fungsinya
+		System.out.printf("masukkan %d nilai x yang akan ditaksir nilai fungsinya:\n",n);
 		for (int i=0;i<n;i++) xk[i]=in.nextDouble();
 		// dapatkan persamaan regresi
 		double b[]=regresi(n,m,x,y);
@@ -144,8 +153,46 @@ public class regresi{
 				if (b[i]>0) System.out.printf("+");
 			}
 			if (i==0) System.out.printf("%f\n",b[i]);
-			else System.out.printf("%fx%d\n",b[i],i);
+			else System.out.printf("%f x%d\n",b[i],i);
 		}
 		System.out.printf("nilai taksiran: %f\n",ans);
+		// beri pilihan simpan jawaban
+		System.out.printf("Apakah Anda ingin menyimpan jawaban dalam file?\n1. ya\n2. tidak\n");
+		choice=in.nextInt();
+		while(choice<1 || choice>2){
+			System.out.printf("masukan tidak valid, ulangi masukan\n");
+			choice=in.nextInt();
+		}
+		if (choice==1){
+			String s="";
+			System.out.printf("masukkan nama file: ");
+			try{
+				s=in2.readLine();
+			}
+			catch (IOException err){
+				err.printStackTrace();
+			}
+			try{
+				FileWriter filewriter=new FileWriter("../test/"+s);
+				filewriter.write("persamaan regresi:\n");
+				for (int i=0;i<=n;i++){
+					if (i>0){
+						if (b[i]>0) filewriter.write("+");
+					}
+					if (i==0) filewriter.write(Double.toString(b[i])+"\n");
+					else filewriter.write(Double.toString(b[i])+" x"+Integer.toString(i)+"\n");
+				}
+				filewriter.write("nilai taksiran pada x=[");
+				for (int i=0;i<n;i++){
+					if (i>0) filewriter.write(",");
+					filewriter.write(Double.toString(xk[i]));
+				}
+				filewriter.write("]\nadalah "+Double.toString(ans));
+				filewriter.close();
+			}
+			catch (IOException err){
+				err.printStackTrace();
+			}
+		}
 	}
 }
