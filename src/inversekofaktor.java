@@ -76,7 +76,7 @@ public static double[][] inverskofaktor(double[][] matriks, int N){
 		matriks[1][0] = tempo;
 		temp = matriks;
 	}
-	else {
+	else if (N != 0){
 	double[][]kecil = new double[N-1][N-1];
 	int count1 = 0;
 	int count2 = 0;
@@ -112,7 +112,7 @@ public static double[][] inverskofaktor(double[][] matriks, int N){
 		}
 	}
 	/*hitung invers*/
-	if (det == 0) {
+	if (det == 0 || N == 0) {
 		double [][]failure = {
 				{-99999999}
 		};
