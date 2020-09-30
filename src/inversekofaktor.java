@@ -4,9 +4,9 @@ import java.io.IOException;
 import java.util.Scanner;
 
 public class inversekofaktor {
-/*public static void main(String[] args) {
+public static void main(String[] args) {
 	driverinverskofaktor();
-}*/
+}
 public static void driverinverskofaktor() {
     InputMatrix inputMtrx = new InputMatrix();
     Scanner in = new Scanner(System.in);
@@ -78,7 +78,6 @@ public static double[][] inverskofaktor(double[][] matriks, int N){
 	}
 	else {
 	double[][]kecil = new double[N-1][N-1];
-	double [][]kosong = new double[N-1][N-1];
 	int count1 = 0;
 	int count2 = 0;
 	int sign = 1;
@@ -102,7 +101,6 @@ public static double[][] inverskofaktor(double[][] matriks, int N){
 		}
 		temp[i][j] = sign * detKofaktor.determinan(kecil, N-1);
 		if (temp[i][j] == -0) temp[i][j] = 0;
-		kecil = kosong;
 		sign*= -1;
 	}
 	}
