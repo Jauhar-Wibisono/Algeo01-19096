@@ -15,16 +15,16 @@ public class menu{
 			System.out.println("MENU");
 			System.out.printf("1. Sistem Persamaan Linier\n2. Determinan\n3. Matriks Balikan\n4. interpolasi polinom\n5. Regresi Linear Berganda\n6. Keluar\n");
 			choice=in.nextInt();
-			while (choice<1 && choice>6){
-				System.out.printf("masukan tidak valid, ulangi masukan\n");
+			while (choice<1 || choice>6){
+				System.out.printf("Masukan tidak valid, ulangi masukan\n");
 				choice=in.nextInt();
 			}
 			if (choice==1){
 				// SPL
 				System.out.printf("1. Metode eliminasi Gauss\n2. Metode Eliminasi Gauss-Jordan\n3. Metode matriks balikan\n4. Kaidah Cramer\n");
 				choice=in.nextInt();
-				while (choice<1 && choice>4){
-					System.out.printf("masukan tidak valid, ulangi masukan\n");
+				while (choice<1 || choice>4){
+					System.out.printf("Masukan tidak valid, ulangi masukan\n");
 					choice=in.nextInt();
 				}
 				if (choice==1){
@@ -46,7 +46,7 @@ public class menu{
 					System.out.printf("%d",tmp.N);
 					tmp.inversSPL(tmp.Maug,tmp.N);
 				}
-				else{
+				else if (choice == 4){
 					// Kaidah Cramer
 					splCramer tmp=new splCramer();
 					tmp.input();
@@ -57,8 +57,8 @@ public class menu{
 				// Determinan
 				System.out.printf("1. Metode reduksi baris\n2. Metode ekspansi kofaktor\n");
 				choice=in.nextInt();
-				while (choice<1 && choice>2){
-					System.out.printf("masukan tidak valid, ulangi masukan\n");
+				while (choice<1 || choice>2){
+					System.out.printf("Masukan tidak valid, ulangi masukan\n");
 					choice=in.nextInt();
 				}
 				if (choice==1){
@@ -66,7 +66,7 @@ public class menu{
 					DetReduksi tmp=new DetReduksi();
 					tmp.driverDetReduksi();
 				}
-				else{
+				else if (choice ==2){
 					// Metode ekspansi kofaktor
 					detKofaktor tmp=new detKofaktor();
 					tmp.driverdetKofaktor();
@@ -76,8 +76,8 @@ public class menu{
 				// Matriks balikan
 				System.out.printf("1. Metode reduksi baris\n2. Metode ekspansi kofaktor\n");
 				choice=in.nextInt();
-				while (choice<1 && choice>2){
-					System.out.printf("masukan tidak valid, ulangi masukan\n");
+				while (choice<1 || choice>2){
+					System.out.printf("Masukan tidak valid, ulangi masukan\n");
 					choice=in.nextInt();
 				}
 				if (choice==1){
@@ -85,7 +85,7 @@ public class menu{
 					InversOBE tmp=new InversOBE();
 					tmp.driverInverse();
 				}
-				else{
+				else if (choice == 2){
 					// Metode ekspansi kofaktor
 					inversekofaktor tmp=new inversekofaktor();
 					tmp.driverinverskofaktor();
@@ -101,7 +101,7 @@ public class menu{
 				regresi tmp=new regresi();
 				tmp.driver_regresi();
 			}
-			else{
+			else if (choice == 6){
 				keluar=true;
 			}
 		}
