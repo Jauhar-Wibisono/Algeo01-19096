@@ -57,6 +57,8 @@ public class detKofaktor {
 }
 public static double determinan(double[][] matriks, int N) {
 	int i,j,k,y,l;
+	if (N == 0) return 1;
+	else if (N==1) return matriks[0][0];
 	double [][]temp  = new double [N][N];
 	double det = 0;
 	boolean geser;
