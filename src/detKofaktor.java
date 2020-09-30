@@ -5,9 +5,9 @@ import java.lang.Math;
 import java.util.Scanner;
 
 public class detKofaktor {
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
 		driverdetKofaktor();
-	}
+	}*/
     public static void driverdetKofaktor() {
         InputMatrix inputMtrx = new InputMatrix();
         Scanner in = new Scanner(System.in);
