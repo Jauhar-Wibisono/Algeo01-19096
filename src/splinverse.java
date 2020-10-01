@@ -22,6 +22,8 @@ public class splinverse {
     public static String[] variable = new String[101];
     
     public void input(){
+    	nBrs = 0;
+    	nKol = 0;
         Scanner in = new Scanner(System.in);
         int opt;
         System.out.println("1. Masukkan Matriks dari keyboard");
