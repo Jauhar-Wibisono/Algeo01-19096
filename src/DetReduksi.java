@@ -28,7 +28,7 @@ public class DetReduksi{
 
         //Output Hasil Determinan
         int opt;
-        System.out.println("Apakah anda ingin masukan output kedalam file ?");
+        System.out.println("Apakah Anda ingin masukan output kedalam file ?");
         System.out.println("1.Ya   2.Tidak");
         opt = in.nextInt();
         while(opt<1 || opt>2){
@@ -53,6 +53,7 @@ public class DetReduksi{
         }
         
         System.out.println("Determinan = "+detFormat);
+        System.out.println("\n");
 //      in.close();
     }
 }
