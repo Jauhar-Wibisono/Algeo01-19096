@@ -148,6 +148,7 @@ public class regresi{
 		for (int i=0;i<n;i++) ans+=b[i+1]*xk[i];
 		// cetak jawaban
 		System.out.printf("Persamaan Regresi:\n");
+		System.out.println("y=");
 		for (int i=0;i<=n;i++){
 			if (i>0){
 				if (b[i]>0) System.out.printf("+");
@@ -193,7 +194,6 @@ public class regresi{
 			catch (IOException err){
 				err.printStackTrace();
 			}
-			System.out.println();
 		}
 	}
 }

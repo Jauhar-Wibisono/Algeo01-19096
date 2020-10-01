@@ -170,7 +170,6 @@ public class interpolasi{
 			catch (IOException err){
 				err.printStackTrace();
 			}
-			System.out.println();
 		}
 	}
 }
