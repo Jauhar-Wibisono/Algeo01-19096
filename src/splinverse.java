@@ -108,7 +108,7 @@ public class splinverse {
             System.out.print("Masukan nama file: ");
             namaFile = in.next();
             try {
-                File file = new File("../test"+namaFile);
+                File file = new File("../test/"+namaFile);
                 file.createNewFile();
                 FileWriter fileWriter = new FileWriter("../test/"+namaFile);
                 String newLine = System.getProperty("line.separator");
@@ -131,7 +131,6 @@ public class splinverse {
                 System.out.println(variable[j]+" = "+solusi[j]);
             }
         }else System.out.println("SPL tidak memiliki solusi atau matriks tidak bisa diinverse.");
-        System.out.println();
     }
 
 	public static void  inversSPL(double[][]M, int N) {

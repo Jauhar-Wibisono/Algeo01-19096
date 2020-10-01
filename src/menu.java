@@ -104,6 +104,7 @@ public class menu{
 			else if (choice == 6){
 				keluar=true;
 			}
+			System.out.println();
 		}
 	}
 }

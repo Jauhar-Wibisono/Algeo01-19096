@@ -40,7 +40,7 @@ public class DetReduksi{
             System.out.print("Masukan nama file: ");
             namaFile = in.next();
             try {
-                File file = new File("../test"+namaFile);
+                File file = new File("../test/"+namaFile);
                 file.createNewFile();
                 FileWriter fileWriter = new FileWriter("../test/"+namaFile);
                 fileWriter.write(detFormat);
@@ -53,7 +53,6 @@ public class DetReduksi{
         }
         
         System.out.println("Determinan = "+detFormat);
-        System.out.println();
 //      in.close();
     }
 }

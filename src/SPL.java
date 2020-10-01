@@ -102,7 +102,7 @@ public class SPL {
             System.out.print("Masukan nama file: ");
             namaFile = in.next();
             try {
-                File file = new File("../test"+namaFile);
+                File file = new File("../test/"+namaFile);
                 file.createNewFile();
                 FileWriter fileWriter = new FileWriter("../test/"+namaFile);
                 String newLine = System.getProperty("line.separator");
@@ -125,7 +125,6 @@ public class SPL {
                 System.out.println(variable[j]+" = "+solusi[j]);
             }
         }else System.out.println("SPL tidak memiliki solusi");
-        System.out.println();
     }
 
     public void SPLGauss(double[][] M,int Nbar,int Ncol){

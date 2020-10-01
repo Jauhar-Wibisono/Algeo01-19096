@@ -108,7 +108,7 @@ public static void output(String[] Var, String[] solusi, int Nvar, boolean isSol
         System.out.print("Masukan nama file: ");
         namaFile = in.next();
         try {
-            File file = new File("../test"+namaFile);
+            File file = new File("../test/"+namaFile);
             file.createNewFile();
             FileWriter fileWriter = new FileWriter("../test/"+namaFile);
             String newLine = System.getProperty("line.separator");
@@ -123,7 +123,6 @@ public static void output(String[] Var, String[] solusi, int Nvar, boolean isSol
             System.out.println("Terjadi error dalam pemasukan file");
             err.printStackTrace();
         }
-        System.out.println();
     }
 
     //Output di command line
