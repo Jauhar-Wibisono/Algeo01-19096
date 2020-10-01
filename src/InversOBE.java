@@ -4,7 +4,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 public class InversOBE {
-    public double[][] inverse(double[][] M,int N){
+    public static double[][] inverse(double[][] M,int N){
         //Pembuatan matriks MI
         double Mtemp[][] = new double[N][N*2];
         for(int i=0;i<N;i++){
