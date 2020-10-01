@@ -21,7 +21,7 @@ public class menu{
 			}
 			if (choice==1){
 				// SPL
-				System.out.printf("1. Metode eliminasi Gauss\n2. Metode Eliminasi Gauss-Jordan\n3. Metode matriks balikan\n4. Kaidah Cramer\n");
+				System.out.printf("1. Metode Eliminasi Gauss\n2. Metode Eliminasi Gauss-Jordan\n3. Metode Matriks Balikan\n4. Kaidah Cramer\n");
 				choice=in.nextInt();
 				while (choice<1 || choice>4){
 					System.out.printf("Masukan tidak valid, ulangi masukan\n");
