@@ -387,14 +387,6 @@ public class SPL {
                         } 
                     }
 
-                    System.out.println("Variabel ke"+(y+1));
-                    for(int j=0;j<Ncol-1;j++){
-                        for(int l=0;l<=Nvar;l++){
-                            System.out.print(koefparam[j][l]+" ");
-                        } 
-                        System.out.println();
-                    }
-
                     //Buat persamaan parametrik
                     String temp="";
                     boolean zero=false;
