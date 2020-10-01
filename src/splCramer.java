@@ -75,7 +75,8 @@ public void input(){
                     nKol = line.length;
                 }
                 fileCount.close();
-                N = nBrs;
+                if (nBrs == nKol - 1) N = nBrs;
+                else N = -99999999;
                 Scanner file = new Scanner(new File("../test/"+namaFile));
                 for (int i=0;i<nBrs;i++){
                     for (int j=0;j<nKol;j++){
@@ -116,7 +117,7 @@ public static void output(String[] Var, String[] solusi, int Nvar, boolean isSol
                 for (int j=0;j<Nvar-1;j++){
                     fileWriter.write(variable[j]+" = "+solusi[j]+newLine);
                 }
-            }else fileWriter.write("SPL tidak memiliki solusi atau determinan matriks 0.");
+            }else fileWriter.write("SPL tidak memiliki solusi atau determinan matriks 0 atau bukan matriks persegi.");
             fileWriter.close();
         }
         catch(IOException err){
@@ -134,6 +135,11 @@ public static void output(String[] Var, String[] solusi, int Nvar, boolean isSol
 }
 
 public static void  cramerSPL(double[][]M, int N) {
+	boolean isSolve = true;
+	if (N == -99999999) {
+		isSolve = false;
+		N = 0;
+	}
 String[] solusi = new String[101];
 //Proses invers
 /*AX = B -> X = A^-1 * B*/
@@ -145,7 +151,6 @@ for (int i = 0; i<N; i++) {
 		A[i][j] = M[i][j];
 	}
 }
-boolean isSolve = true;
 double det = detKofaktor.determinan(A, N);
 if(det == 0) isSolve = false;
 double [][] hasil = new double[N][1];

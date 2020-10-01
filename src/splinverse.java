@@ -57,7 +57,7 @@ public class splinverse {
                 Maug[i][N] = B[i][0];
                 for(int j=0;j<N;j++){
                     Maug[i][j]= A[i][j];
-;
+
                 }
             }
         }else{
@@ -75,7 +75,8 @@ public class splinverse {
                         nKol = line.length;
                     }
                     fileCount.close();
-                    N = nBrs;
+                    if (nBrs == (nKol - 1)) N = nBrs;
+                    else N = -99999999;
                     Scanner file = new Scanner(new File("../test/"+namaFile));
                     for (int i=0;i<nBrs;i++){
                         for (int j=0;j<nKol;j++){
@@ -134,6 +135,11 @@ public class splinverse {
     }
 
 	public static void  inversSPL(double[][]M, int N) {
+	boolean isSolve = true;
+	if (N == -99999999) {
+		isSolve = false;
+		N = 0;
+	}
 	String[] solusi = new String[101];
     //Proses invers
     /*AX = B -> X = A^-1 * B*/
@@ -145,7 +151,6 @@ public class splinverse {
 			A[i][j] = M[i][j];
 		}
 	}
-	boolean isSolve = true;
 	double [][] ainverse = InversOBE.inverse(A, N);
 	double [][] hasil = new double[N][1];
 	for(int i = 0; i < N; i++){

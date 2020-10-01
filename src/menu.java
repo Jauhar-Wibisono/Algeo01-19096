@@ -43,7 +43,6 @@ public class menu{
 					// Metode matriks balikan
 					splinverse tmp=new splinverse();
 					tmp.input();
-					System.out.printf("%d",tmp.N);
 					tmp.inversSPL(tmp.Maug,tmp.N);
 				}
 				else if (choice == 4){
