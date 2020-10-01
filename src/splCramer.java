@@ -73,7 +73,7 @@ public void input(){
                     nKol = line.length;
                 }
                 fileCount.close();
-
+                N = nBrs;
                 Scanner file = new Scanner(new File("../test/"+namaFile));
                 for (int i=0;i<nBrs;i++){
                     for (int j=0;j<nKol;j++){
@@ -94,7 +94,7 @@ public void input(){
 public static void output(String[] Var, String[] solusi, int Nvar, boolean isSolve){
     Scanner in = new Scanner(System.in);
     int opt;
-    System.out.println("Apakah anda ingin masukan output kedalam file ?");
+    System.out.println("Apakah Anda ingin masukan output kedalam file ?");
     System.out.println("1.Ya   2.Tidak");
     opt = in.nextInt();
     while(opt<1 || opt>2){

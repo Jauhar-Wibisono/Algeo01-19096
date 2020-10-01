@@ -73,7 +73,7 @@ public class splinverse {
                         nKol = line.length;
                     }
                     fileCount.close();
-    
+                    N = nBrs;
                     Scanner file = new Scanner(new File("../test/"+namaFile));
                     for (int i=0;i<nBrs;i++){
                         for (int j=0;j<nKol;j++){
@@ -94,7 +94,7 @@ public class splinverse {
     public static void output(String[] Var, String[] solusi, int Nvar, boolean isSolve){
         Scanner in = new Scanner(System.in);
         int opt;
-        System.out.println("Apakah anda ingin masukan output kedalam file ?");
+        System.out.println("Apakah Anda ingin masukan output kedalam file ?");
         System.out.println("1.Ya   2.Tidak");
         opt = in.nextInt();
         while(opt<1 || opt>2){
@@ -135,7 +135,7 @@ public class splinverse {
 	String[] solusi = new String[101];
     //Proses invers
     /*AX = B -> X = A^-1 * B*/
-	double [][] A = new double[N][N];
+	double [][] A = new double[101][101];
 	double [][] B = new double [N][1];
 	for (int i = 0; i<N; i++) {
 		B[i][0] = M[i][N];
@@ -144,8 +144,7 @@ public class splinverse {
 		}
 	}
 	boolean isSolve = true;
-	double [][] ainverse = inversekofaktor.inverskofaktor(A, N);
-	if(ainverse[0][0] == -99999999) isSolve = false;
+	double [][] ainverse = InversOBE.inverse(A, N);
 	double [][] hasil = new double[N][1];
 	for(int i = 0; i < N; i++){
 		for(int j = 0; j < N; j++){
