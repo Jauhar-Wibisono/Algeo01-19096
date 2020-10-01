@@ -11,6 +11,7 @@ public class InputMatrix {
     public static int nBrs,nKol;
     public static double[][] M = new double[101][101];
     public void input(){
+    	nBrs = 0;
         Scanner in = new Scanner(System.in);
 
         int opt;
