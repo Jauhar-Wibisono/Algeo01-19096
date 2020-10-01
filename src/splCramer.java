@@ -121,6 +121,7 @@ public static void output(String[] Var, String[] solusi, int Nvar, boolean isSol
             System.out.println("Terjadi error dalam pemasukan file");
             err.printStackTrace();
         }
+        System.out.println();
     }
 
     //Output di command line

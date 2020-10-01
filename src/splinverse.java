@@ -114,7 +114,7 @@ public class splinverse {
                     for (int j=0;j<Nvar-1;j++){
                         fileWriter.write(variable[j]+" = "+solusi[j]+newLine);
                     }
-                }else fileWriter.write("SPL tidak memiliki solusi atau matriks tidak bisa diinvers.");
+                }else fileWriter.write("SPL tidak memiliki solusi atau matriks tidak bisa diinverse.");
                 fileWriter.close();
             }
             catch(IOException err){
@@ -129,6 +129,7 @@ public class splinverse {
                 System.out.println(variable[j]+" = "+solusi[j]);
             }
         }else System.out.println("SPL tidak memiliki solusi atau matriks tidak bisa diinverse.");
+        System.out.println();
     }
 
 	public static void  inversSPL(double[][]M, int N) {

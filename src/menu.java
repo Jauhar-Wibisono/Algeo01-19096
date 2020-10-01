@@ -13,7 +13,7 @@ public class menu{
 		while (!keluar){
 			Scanner in=(new Scanner(System.in));
 			System.out.println("MENU");
-			System.out.printf("1. Sistem Persamaan Linier\n2. Determinan\n3. Matriks Balikan\n4. interpolasi polinom\n5. Regresi Linear Berganda\n6. Keluar\n");
+			System.out.printf("1. Sistem Persamaan Linier\n2. Determinan\n3. Matriks Balikan\n4. Interpolasi Polinom\n5. Regresi Linear Berganda\n6. Keluar\n");
 			choice=in.nextInt();
 			while (choice<1 || choice>6){
 				System.out.printf("Masukan tidak valid, ulangi masukan\n");

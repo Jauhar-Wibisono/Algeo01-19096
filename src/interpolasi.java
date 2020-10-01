@@ -74,17 +74,17 @@ public class interpolasi{
 		double x[]=new double[101], y[]=new double[101];
 		double qx=0;
 		// baca masukan
-		System.out.printf("1. masukan titik dari keyboard\n2. masukan titik dari file\n");
+		System.out.printf("1. Masukan titik dari keyboard\n2. Masukan titik dari file\n");
 		int choice;
 		choice=in.nextInt();
 		while(choice<1 || choice>2){
-			System.out.printf("masukan tidak valid, ulangi masukan\n");
+			System.out.printf("Masukan tidak valid, ulangi masukan\n");
 			choice=in.nextInt();
 		}
 		if (choice==1){
-			System.out.printf("masukkan jumlah titik: ");
+			System.out.printf("Masukkan jumlah titik: ");
 			n=in.nextInt();
-			System.out.printf("masukkan titik-titik (x dan y dipisah spasi):\n");
+			System.out.printf("Masukkan titik-titik (x dan y dipisah spasi):\n");
 			for (int i=0;i<n;i++){
 				x[i]=in.nextDouble();
 				y[i]=in.nextDouble(); 
@@ -96,7 +96,7 @@ public class interpolasi{
 			do{
 				error=false;
 				String s="";
-				System.out.printf("masukkan nama file: ");
+				System.out.printf("Masukkan nama file: ");
 				try{
 					s=in2.readLine();
 				}
@@ -119,7 +119,7 @@ public class interpolasi{
 			} while(error);
 		}
 		// input nilai x yang akan ditaksir nilai fungsinya
-		System.out.printf("masukkan nilai x yang akan ditaksir nilai fungsinya: ");
+		System.out.printf("Masukkan nilai x yang akan ditaksir nilai fungsinya: ");
 		qx=in.nextDouble();
 		// dapatkan polinom interpolasi
 		double koef[]=interpolate(n,x,y);
@@ -131,24 +131,24 @@ public class interpolasi{
 			tmp*=qx;
 		}
 		// cetak jawaban
-		System.out.printf("polinom interpolasi:\n");
+		System.out.printf("Polinom Interpolasi:\n");
 		for (int i=n;i>=0;i--){
 			if (i<n){
 				if (koef[i]>0) System.out.printf("+");
 			}
 			System.out.printf("%f x^%d\n",koef[i],i);
 		}
-		System.out.printf("taksiran fungsi pada x=%f: %f\n",qx,ans);
+		System.out.printf("Taksiran fungsi pada x=%f: %f\n",qx,ans);
 		// beri pilihan simpan jawaban
-		System.out.printf("Apakah Anda ingin menyimpan jawaban dalam file?\n1. ya\n2. tidak\n");
+		System.out.printf("Apakah Anda ingin menyimpan jawaban dalam file?\n1. Ya\n2. Tidak\n");
 		choice=in.nextInt();
 		while(choice<1 || choice>2){
-			System.out.printf("masukan tidak valid, ulangi masukan\n");
+			System.out.printf("Masukan tidak valid, ulangi masukan\n");
 			choice=in.nextInt();
 		}
 		if (choice==1){
 			String s="";
-			System.out.printf("masukkan nama file: ");
+			System.out.printf("Masukkan nama file: ");
 			try{
 					s=in2.readLine();
 				}
@@ -157,19 +157,20 @@ public class interpolasi{
 				}
 			try{
 				FileWriter filewriter=new FileWriter("../test/"+s);
-				filewriter.write("polinom interpolasi:\n");
+				filewriter.write("Polinom Interpolasi:\n");
 				for (int i=n;i>=0;i--){
 					if (i<n){
 						if (koef[i]>0) filewriter.write("+");
 					}
 					filewriter.write(Double.toString(koef[i])+" x^"+Integer.toString(i)+"\n");
 				}
-				filewriter.write("taksiran fungsi pada x="+Double.toString(qx)+": "+Double.toString(ans)+"\n");
+				filewriter.write("Taksiran fungsi pada x="+Double.toString(qx)+": "+Double.toString(ans)+"\n");
 				filewriter.close();
 			}
 			catch (IOException err){
 				err.printStackTrace();
 			}
+			System.out.println();
 		}
 	}
 }

@@ -83,19 +83,19 @@ public class regresi{
 		double x[][]=new double[101][101], y[]=new double[101];
 		double xk[]=new double[101];
 		// baca masukan
-		System.out.printf("1. masukan dari keyboard\n2. masukan dari file\n");
+		System.out.printf("1. Masukan dari keyboard\n2. Masukan dari file\n");
 		int choice;
 		choice=in.nextInt();
 		while(choice<1 || choice>2){
-			System.out.printf("masukan tidak valid, masukan diulang\n");
+			System.out.printf("Masukan tidak valid, masukan diulang\n");
 			choice=in.nextInt();
 		}
 		if (choice==1){
-			System.out.printf("masukkan banyak peubah x: ");
+			System.out.printf("Masukkan banyak peubah x: ");
 			n=in.nextInt();
-			System.out.printf("masukkan banyak persamaan: ");
+			System.out.printf("Masukkan banyak persamaan: ");
 			m=in.nextInt();
-			System.out.printf("masukkan %d baris persamaan:\n",m);
+			System.out.printf("Masukkan %d baris persamaan:\n",m);
 			for (int i=0;i<m;i++){
 				for (int j=0;j<n;j++) x[i][j]=in.nextDouble();
 				y[i]=in.nextDouble(); 
@@ -107,7 +107,7 @@ public class regresi{
 			do{
 				error=false;
 				String s="";
-				System.out.printf("masukkan nama file: ");
+				System.out.printf("Masukkan nama file: ");
 				try{
 					s=in2.readLine();
 				}
@@ -139,7 +139,7 @@ public class regresi{
 			} while (error);
 		}
 		// imput nilai-nilai x yang akan ditaksir nilai fungsinya
-		System.out.printf("masukkan %d nilai x yang akan ditaksir nilai fungsinya:\n",n);
+		System.out.printf("Masukkan %d nilai x yang akan ditaksir nilai fungsinya:\n",n);
 		for (int i=0;i<n;i++) xk[i]=in.nextDouble();
 		// dapatkan persamaan regresi
 		double b[]=regresi(n,m,x,y);
@@ -147,7 +147,7 @@ public class regresi{
 		double ans=b[0];
 		for (int i=0;i<n;i++) ans+=b[i+1]*xk[i];
 		// cetak jawaban
-		System.out.printf("persamaan regresi:\n");
+		System.out.printf("Persamaan Regresi:\n");
 		for (int i=0;i<=n;i++){
 			if (i>0){
 				if (b[i]>0) System.out.printf("+");
@@ -155,17 +155,17 @@ public class regresi{
 			if (i==0) System.out.printf("%f\n",b[i]);
 			else System.out.printf("%f x%d\n",b[i],i);
 		}
-		System.out.printf("nilai taksiran: %f\n",ans);
+		System.out.printf("Nilai taksiran: %f\n",ans);
 		// beri pilihan simpan jawaban
-		System.out.printf("Apakah Anda ingin menyimpan jawaban dalam file?\n1. ya\n2. tidak\n");
+		System.out.printf("Apakah Anda ingin menyimpan jawaban dalam file?\n1. Ya\n2. Tidak\n");
 		choice=in.nextInt();
 		while(choice<1 || choice>2){
-			System.out.printf("masukan tidak valid, ulangi masukan\n");
+			System.out.printf("Masukan tidak valid, ulangi masukan\n");
 			choice=in.nextInt();
 		}
 		if (choice==1){
 			String s="";
-			System.out.printf("masukkan nama file: ");
+			System.out.printf("Masukkan nama file: ");
 			try{
 				s=in2.readLine();
 			}
@@ -174,7 +174,7 @@ public class regresi{
 			}
 			try{
 				FileWriter filewriter=new FileWriter("../test/"+s);
-				filewriter.write("persamaan regresi:\n");
+				filewriter.write("Persamaan Regresi:\n");
 				for (int i=0;i<=n;i++){
 					if (i>0){
 						if (b[i]>0) filewriter.write("+");
@@ -182,7 +182,7 @@ public class regresi{
 					if (i==0) filewriter.write(Double.toString(b[i])+"\n");
 					else filewriter.write(Double.toString(b[i])+" x"+Integer.toString(i)+"\n");
 				}
-				filewriter.write("nilai taksiran pada x=[");
+				filewriter.write("Nilai taksiran pada x=[");
 				for (int i=0;i<n;i++){
 					if (i>0) filewriter.write(",");
 					filewriter.write(Double.toString(xk[i]));
@@ -193,6 +193,7 @@ public class regresi{
 			catch (IOException err){
 				err.printStackTrace();
 			}
+			System.out.println();
 		}
 	}
 }

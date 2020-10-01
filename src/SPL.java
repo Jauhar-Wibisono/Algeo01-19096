@@ -125,6 +125,7 @@ public class SPL {
                 System.out.println(variable[j]+" = "+solusi[j]);
             }
         }else System.out.println("SPL tidak memiliki solusi");
+        System.out.println();
     }
 
     public void SPLGauss(double[][] M,int Nbar,int Ncol){
@@ -164,7 +165,7 @@ public class SPL {
                         double value = Double.parseDouble(solusi[j]);
                         temp -= (M[i][j])*value;
                     }
-                    solusi[i] = String.format("%.2f",temp);
+                    solusi[i] = String.format("%.3f",temp);
                 }
             }else{//Solusi SPL lebih dari 1
                 int Nvar = Ncol-(1+Nbar);
@@ -259,14 +260,14 @@ public class SPL {
                             if(l==0) zero = true;
                         }
                         else if(value==1){//Koefisien 1
-                            if (l==0) temp = temp + String.format("%.2f",value);
+                            if (l==0) temp = temp + String.format("%.3f",value);
                             else if(zero) {temp = temp + solusi[varIdx]; zero=false;}
                             else temp = temp + op + solusi[varIdx];
                         }
                         else{//Koefisien > 1
-                            if (l==0) temp = temp + String.format("%.2f",value);
-                            else if(zero) {temp = temp + String.format("%.2f",value)+solusi[varIdx]; zero=false;}
-                            else temp = temp + op + String.format("%.2f",value)+solusi[varIdx];
+                            if (l==0) temp = temp + String.format("%.3f",value);
+                            else if(zero) {temp = temp + String.format("%.3f",value)+solusi[varIdx]; zero=false;}
+                            else temp = temp + op + String.format("%.3f",value)+solusi[varIdx];
                         }
                     }
                     if (found) solusi[y]=temp;
@@ -307,7 +308,7 @@ public class SPL {
 
             if(solusiUnik){//Solusi SPL unik
                 for(int i=0;i<Nbar;i++){
-                    solusi[i]=String.format("%.2f",M[i][Ncol-1]);
+                    solusi[i]=String.format("%.3f",M[i][Ncol-1]);
                 }
             }else{//Solusi lebih dari 1
                 int Nvar = Ncol-(1+Nbar);//Jumlah variabel parametrik
@@ -403,14 +404,14 @@ public class SPL {
                             if(l==0) zero = true;
                         }
                         else if(value==1){//Koefisien 1
-                            if (l==0) temp = temp + String.format("%.2f",value);
+                            if (l==0) temp = temp + String.format("%.3f",value);
                             else if(zero) {temp = temp + solusi[idxVar]; zero=false;}
                             else temp = temp + op + solusi[idxVar];
                         }
                         else{//Koefisien > 1
-                            if (l==0) temp = temp + String.format("%.2f",value);
-                            else if(zero) {temp = temp + String.format("%.2f",value)+solusi[idxVar]; zero=false;}
-                            else temp = temp + op + String.format("%.2f",value)+solusi[idxVar];
+                            if (l==0) temp = temp + String.format("%.3f",value);
+                            else if(zero) {temp = temp + String.format("%.3f",value)+solusi[idxVar]; zero=false;}
+                            else temp = temp + op + String.format("%.3f",value)+solusi[idxVar];
                         }
                     } 
                     if (found) solusi[y]=temp;
