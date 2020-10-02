@@ -1,5 +1,5 @@
 # tubes1-algeo-kelompok54
-Program kami memiliki 13 Class, dengan 1 class yang memiliki main method yaitu menu
+Program kami memiliki 13 Class, dengan 1 class yang memiliki main method yaitu menu.
 
 Cara menjalankan program :
 1. Menjalankan menu.class di folder bin pada command line dengan command "java menu".
