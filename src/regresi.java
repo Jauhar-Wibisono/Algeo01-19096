@@ -175,7 +175,7 @@ public class regresi{
 			}
 			try{
 				FileWriter filewriter=new FileWriter("../test/"+s);
-				filewriter.write("Persamaan Regresi:\n");
+				filewriter.write("Persamaan Regresi:\ny=\n");
 				for (int i=0;i<=n;i++){
 					if (i>0){
 						if (b[i]>0) filewriter.write("+");
