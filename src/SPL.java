@@ -221,6 +221,12 @@ public class SPL {
                         koefparam[j][count]=1;
                         koefparam[Ncol][count]=j;
                         param++; 
+                    }else if(Ncol-(j+1) == Nvar-count){
+                        solusi[j]=Character.toString(param);
+                        count++;
+                        koefparam[j][count]=1;
+                        koefparam[Ncol][count]=j;
+                        param++;
                     }
                 }
 
@@ -364,6 +370,12 @@ public class SPL {
                         koefparam[j][count]=1;
                         koefparam[Ncol][count]=j;
                         param++; 
+                    }else if(Ncol-(j+1) == Nvar-count){
+                        solusi[j]=Character.toString(param);
+                        count++;
+                        koefparam[j][count]=1;
+                        koefparam[Ncol][count]=j;
+                        param++;
                     }
                 }
 
